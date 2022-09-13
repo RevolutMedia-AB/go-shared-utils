@@ -37,20 +37,36 @@ func ChallengeRaw(client *stream.Client, challengeId string) *FeedGroup {
 	return NewFeedGroup(client, ChallengeRawSlug, challengeId)
 }
 
-func GlobalChallenge(client *stream.Client) *FeedGroup {
-	return NewFeedGroup(client, GlobalSlug, "challenge")
+func ChallengeNotification(client *stream.Client, challengeId string) *FeedGroup {
+	return NewFeedGroup(client, ChallengeNotificationSlug, challengeId)
 }
 
-func UserNotification(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, UserNotificationSlug, userId)
+func ChallengeEntry(client *stream.Client, challengeId string) *FeedGroup {
+	return NewFeedGroup(client, ChallengeEntrySlug, challengeId)
+}
+
+func GlobalChallenge(client *stream.Client) *FeedGroup {
+	return NewFeedGroup(client, GlobalSlug, "challenge")
 }
 
 func UserRaw(client *stream.Client, userId string) *FeedGroup {
 	return NewFeedGroup(client, UserRawSlug, userId)
 }
 
+func UserNotification(client *stream.Client, userId string) *FeedGroup {
+	return NewFeedGroup(client, UserNotificationSlug, userId)
+}
+
 func UserChallenge(client *stream.Client, userId string) *FeedGroup {
 	return NewFeedGroup(client, UserChallengeSlug, userId)
+}
+
+func UserChallengeEntry(client *stream.Client, userId string, challengeId string) *FeedGroup {
+	return NewFeedGroup(client, UserChallengeEntrySlug, userId+"_"+challengeId)
+}
+
+func UserEntry(client *stream.Client, userId string) *FeedGroup {
+	return NewFeedGroup(client, UserEntrySlug, userId)
 }
 
 func ProjectedUserHome(client *stream.Client, userId string) *FeedGroup {
@@ -61,9 +77,6 @@ func ProjectedUserNotificationFeed(client *stream.Client, userId string) *FeedGr
 	return NewFeedGroup(client, ProjectedUserNotificationSlug, userId)
 }
 
-func ChallengeNotification(client *stream.Client, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, ChallengeNotificationSlug, challengeId)
-}
-func ChallengeEntry(client *stream.Client, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, ChallengeEntrySlug, challengeId)
+func Curated(client *stream.Client, userId string) *FeedGroup {
+	return NewFeedGroup(client, CuratedSlug, userId)
 }
