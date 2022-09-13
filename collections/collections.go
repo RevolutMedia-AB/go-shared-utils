@@ -6,6 +6,7 @@ const (
 	ChallengeSlug       string = "challenge"
 	EntrySlug           string = "entry"
 	UsernamesSlug       string = "usernames"
+	CommentSlug         string = "comment"
 )
 
 type Collections struct {
