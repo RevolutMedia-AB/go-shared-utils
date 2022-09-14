@@ -22,7 +22,7 @@ func UserModelFromGetStreamActor(user *stream.UserResponse) UserModel {
 	}
 }
 
-func UserModelFromActivityActor(actor *stream.Data) UserModel {
+func UserModelFromActivityActor(actor stream.Data) UserModel {
 	return UserModel{
 		ID:                actor.ID,
 		Username:          actor.Extra["username"].(string),
