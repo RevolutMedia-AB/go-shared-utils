@@ -17,3 +17,14 @@ func ChallengeModelFromCollectionAndActor(collection *stream.CollectionObjectRes
 		CreatedBy:   UserModelFromGetStreamActor(actor),
 	}
 }
+
+func ChallengeModelFromActivityExtra(collection map[string]interface{}, actor stream.Data) ChallengeModel {
+	challengeCollection := collection["data"].(map[string]interface{})
+
+	return ChallengeModel{
+		ID:          challengeCollection["id"].(string),
+		Title:       challengeCollection["title"].(string),
+		Description: challengeCollection["description"].(string),
+		CreatedBy:   UserModelFromActivityActor(actor),
+	}
+}
