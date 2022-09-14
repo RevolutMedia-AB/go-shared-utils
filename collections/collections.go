@@ -5,7 +5,7 @@ const (
 	FollowChallengeSlug string = "follow_challenge"
 	ChallengeSlug       string = "challenge"
 	EntrySlug           string = "entry"
-	UsernamesSlug       string = "usernames"
+	UsernameSlug        string = "username"
 	CommentSlug         string = "comment"
 )
 
@@ -14,5 +14,5 @@ type Collections struct {
 	FollowChallenge string `default:"follow_challenge"`
 	Challenge       string `default:"challenge"`
 	Entry           string `default:"entry"`
-	Usernames       string `default:"usernames"`
+	Username        string `default:"username"`
 }
