@@ -18,3 +18,16 @@ func EntryModelFromCollectionsAndActor(entryCollection *stream.CollectionObjectR
 		ChallengeModel: ChallengeModelFromCollectionAndActor(challengeCollection, actor),
 	}
 }
+
+func EntryModelFromEnrichedActivity(activity *stream.EnrichedActivity) EntryModel {
+
+	actor := activity.Actor
+	challengeCollection := activity.Extra["challengeCollection"].(map[string]interface{})
+
+	return EntryModel{
+		ID:				activity.Object.ID,
+		Description:	activity.Object.Extra["description"].(string),
+		CreatedBy:		UserModelFromActivityActor(actor),
+		ChallengeModel: ChallengeModelFromActivityExtra(challengeCollection, actor),
+	}
+}
