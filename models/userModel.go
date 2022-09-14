@@ -21,3 +21,11 @@ func UserModelFromGetStreamActor(user *stream.UserResponse) UserModel {
 		ProfilePictureUrl: user.Data["profilePictureUrl"].(string),
 	}
 }
+
+func UserModelFromActivityActor(actor *stream.Data) UserModel {
+	return UserModel{
+		ID:                actor.ID,
+		Username:          actor.Extra["username"].(string),
+		ProfilePictureUrl: actor.Extra["profilePictureUrl"].(string),
+	}
+}
