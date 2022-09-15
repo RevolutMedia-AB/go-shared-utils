@@ -1,18 +1,23 @@
 package collections
 
 const (
-	FollowUserSlug      string = "follow_user"
-	FollowChallengeSlug string = "follow_challenge"
-	ChallengeSlug       string = "challenge"
-	EntrySlug           string = "entry"
-	UsernameSlug        string = "username"
-	CommentSlug         string = "comment"
+	ChallengeSlug string = "challenge"
+	EntrySlug     string = "entry"
+	UsernameSlug  string = "username"
 )
 
-type Collections struct {
-	FollowUser      string `default:"follow_user"`
-	FollowChallenge string `default:"follow_challenge"`
-	Challenge       string `default:"challenge"`
-	Entry           string `default:"entry"`
-	Username        string `default:"username"`
+type EntryCollectionTemplate struct {
+	Description     string `json:"description"`
+	CreatedByUserId string `json:"createdByUserId"`
+	ChallengeId     string `json:"challengeId"`
+}
+
+type ChallengeCollectionTemplate struct {
+	Title           string `json:"title"`
+	Description     string `json:"description"`
+	CreatedByUserId string `json:"createdByUserId"`
+}
+
+type UsernameCollectionTemplate struct {
+	Username string `json:"username"`
 }
