@@ -73,7 +73,7 @@ func ProjectedUserHome(client *stream.Client, userId string) *FeedGroup {
 	return NewFeedGroup(client, ProjectedUserHomeSlug, userId)
 }
 
-func ProjectedUserNotificationFeed(client *stream.Client, userId string) *FeedGroup {
+func ProjectedUserNotification(client *stream.Client, userId string) *FeedGroup {
 	return NewFeedGroup(client, ProjectedUserNotificationSlug, userId)
 }
 
