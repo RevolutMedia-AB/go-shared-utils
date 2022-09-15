@@ -24,22 +24,32 @@ func EntryModelFromCollectionsAndActor(entryCollection *stream.CollectionObjectR
 
 func EntryModelFromEnrichedActivity(activity stream.EnrichedActivity) (EntryModel, error) {
 
-	extra := activity.Extra["challengeCollection"]
+	challengeCollection := activity.Extra["challengeCollection"]
+	challengeCreatedBy := activity.Extra["challengeCreatedBy"]
 
-	if extra == nil {
+	if challengeCollection == nil {
 		return EntryModel{}, errors.New("challengeCollection not found in activity.Extra")
 	}
 
-	challengeCollection := extra.(map[string]interface{})
-	actor := activity.Actor
+	if challengeCreatedBy == nil {
+		return EntryModel{}, errors.New("challengeCreatedBy not found in activity.Extra")
+	}
+
+	challengeCollectionData := challengeCollection.(map[string]interface{})
+	challengeCreatedByData := challengeCreatedBy.(map[string]interface{})
+
+	challengeActorData := stream.Data{
+		ID:    challengeCreatedByData["id"].(string),
+		Extra: challengeCreatedByData,
+	}
 
 	//need to convert to stream.Data for challengeModelFromData to work
 	challengeData := stream.Data{
-		ID:    challengeCollection["id"].(string),
-		Extra: challengeCollection,
+		ID:    challengeCollectionData["id"].(string),
+		Extra: challengeCollectionData,
 	}
 
-	challengeModel, err := ChallengeModelFromData(challengeData, actor)
+	challengeModel, err := ChallengeModelFromData(challengeData, challengeActorData) //user who created the challenge 
 
 	if err != nil {
 		return EntryModel{}, err
@@ -48,7 +58,7 @@ func EntryModelFromEnrichedActivity(activity stream.EnrichedActivity) (EntryMode
 	return EntryModel{
 		ID:             activity.Object.ID,
 		Description:    activity.Object.Extra["data"].(map[string]interface{})["description"].(string),
-		CreatedBy:      UserModelFromData(actor),
+		CreatedBy:      UserModelFromData(activity.Actor),
 		ChallengeModel: challengeModel,
 	}, nil
 }
