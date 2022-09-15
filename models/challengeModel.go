@@ -1,6 +1,9 @@
 package models
 
-import "github.com/GetStream/stream-go2/v7"
+import (
+	"errors"
+	"github.com/GetStream/stream-go2/v7"
+)
 
 type ChallengeModel struct {
 	ID          string    `json:"id"`
@@ -18,13 +21,18 @@ func ChallengeModelFromCollectionAndActor(collection *stream.CollectionObjectRes
 	}
 }
 
-func ChallengeModelFromActivityExtra(collection map[string]interface{}, actor stream.Data) ChallengeModel {
-	challengeCollection := collection["data"].(map[string]interface{})
+func ChallengeModelFromData(collectionData stream.Data, actorData stream.Data) (ChallengeModel, error) {
 
-	return ChallengeModel{
-		ID:          challengeCollection["id"].(string),
-		Title:       challengeCollection["title"].(string),
-		Description: challengeCollection["description"].(string),
-		CreatedBy:   UserModelFromActivityActor(actor),
+	if extra := collectionData.Extra["data"]; extra != nil {
+		data := extra.(map[string]interface{})
+
+		return ChallengeModel{
+			ID:          collectionData.ID,
+			Title:       data["title"].(string),
+			Description: data["description"].(string),
+			CreatedBy:   UserModelFromData(actorData),
+		}, nil
 	}
+
+	return ChallengeModel{}, errors.New("no data in challengeCollection")
 }
