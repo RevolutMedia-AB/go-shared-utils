@@ -17,66 +17,82 @@ const (
 	CuratedSlug                   string = "curated"
 )
 
-type FeedGroup struct {
+type FlatFeedGroup struct {
 	Feed    *stream.FlatFeed
 	FeedRef string
 }
 
-func NewFeedGroup(client *stream.Client, slug string, id string) *FeedGroup {
+type NotificationFeedGroup struct {
+	Feed    *stream.NotificationFeed
+	FeedRef string
+}
+
+func NewFlatFeedGroup(client *stream.Client, slug string, id string) *FlatFeedGroup {
 	feed, err := client.FlatFeed(slug, id)
 	if err != nil {
 		panic(err)
 	}
-	return &FeedGroup{
+	return &FlatFeedGroup{
 		Feed:    feed,
 		FeedRef: feed.Slug() + ":" + feed.UserID(),
 	}
 }
 
-func ChallengeRaw(client *stream.Client, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, ChallengeRawSlug, challengeId)
+func NewNotificationFeedGroup(client *stream.Client, slug string, id string) *NotificationFeedGroup {
+	feed, err := client.NotificationFeed(slug, id)
+	if err != nil {
+		panic(err)
+	}
+	return &NotificationFeedGroup{
+		Feed:    feed,
+		FeedRef: feed.Slug() + ":" + feed.UserID(),
+	}
 }
 
-func ChallengeNotification(client *stream.Client, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, ChallengeNotificationSlug, challengeId)
+func ChallengeRaw(client *stream.Client, challengeId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, ChallengeRawSlug, challengeId)
 }
 
-func ChallengeEntry(client *stream.Client, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, ChallengeEntrySlug, challengeId)
+func ChallengeNotification(client *stream.Client, challengeId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, ChallengeNotificationSlug, challengeId)
 }
 
-func GlobalChallenge(client *stream.Client) *FeedGroup {
-	return NewFeedGroup(client, GlobalSlug, "challenge")
+func ChallengeEntry(client *stream.Client, challengeId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, ChallengeEntrySlug, challengeId)
 }
 
-func UserRaw(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, UserRawSlug, userId)
+func GlobalChallenge(client *stream.Client) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, GlobalSlug, "challenge")
 }
 
-func UserNotification(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, UserNotificationSlug, userId)
+func UserRaw(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, UserRawSlug, userId)
 }
 
-func UserChallenge(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, UserChallengeSlug, userId)
+func UserNotification(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, UserNotificationSlug, userId)
 }
 
-func UserChallengeEntry(client *stream.Client, userId string, challengeId string) *FeedGroup {
-	return NewFeedGroup(client, UserChallengeEntrySlug, userId+"_"+challengeId)
+func UserChallenge(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, UserChallengeSlug, userId)
 }
 
-func UserEntry(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, UserEntrySlug, userId)
+func UserChallengeEntry(client *stream.Client, userId string, challengeId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, UserChallengeEntrySlug, userId+"_"+challengeId)
 }
 
-func ProjectedUserHome(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, ProjectedUserHomeSlug, userId)
+func UserEntry(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, UserEntrySlug, userId)
 }
 
-func ProjectedUserNotification(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, ProjectedUserNotificationSlug, userId)
+func ProjectedUserHome(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, ProjectedUserHomeSlug, userId)
 }
 
-func Curated(client *stream.Client, userId string) *FeedGroup {
-	return NewFeedGroup(client, CuratedSlug, userId)
+func ProjectedUserNotification(client *stream.Client, userId string) *NotificationFeedGroup {
+	return NewNotificationFeedGroup(client, ProjectedUserNotificationSlug, userId)
+}
+
+func Curated(client *stream.Client, userId string) *FlatFeedGroup {
+	return NewFlatFeedGroup(client, CuratedSlug, userId)
 }
